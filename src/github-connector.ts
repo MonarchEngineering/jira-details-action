@@ -23,23 +23,10 @@ export class GithubConnector {
   }
 
   getIssueKeysFromTitle(): string[] | null {
-    const { USE_BRANCH_NAME } = getInputs();
-
     const prTitle = this.githubData.pullRequest.title;
     const branchName = this.headBranch;
-    const stringToParse = USE_BRANCH_NAME ? branchName : prTitle;
 
-    if (!stringToParse) {
-      if (USE_BRANCH_NAME) {
-        console.log(`JIRA issue id is missing in your branch ${branchName}, doing nothing`);
-      } else {
-        console.log(`JIRA issue id is missing in your PR title ${prTitle}, doing nothing`);
-      }
-
-      return null;
-    }
-
-    return getJiraIssueKeys(stringToParse);
+    return getJiraIssueKeys(prTitle) || getJiraIssueKeys(branchName);
   }
 
   async updatePrDetails(tickets: JiraDetails[]) {

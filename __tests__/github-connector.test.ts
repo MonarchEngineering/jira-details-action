@@ -9,7 +9,7 @@ const MOCK_INPUT: Partial<IActionInputs> = {
   GITHUB_TOKEN: 'GITHUB_TOKEN',
 };
 
-const BRANCH_NAME = 'branchName';
+// const BRANCH_NAME = 'branchName';
 const PR_TITLE = 'prTitle';
 
 jest.mock('@actions/github/lib/github', () => {
@@ -44,21 +44,13 @@ describe('Github connector()', () => {
       const INPUTS_MOCK = {
         ...MOCK_INPUT,
       };
+
       const getJIRAIssueKeysReturnValue = ['DUMMY-01', 'DUMMY-02'];
 
-      beforeEach(() => {
+      it('works', () => {
         (getJiraIssueKeys as any).mockImplementation(() => getJIRAIssueKeysReturnValue);
-      });
-      it('calls getJIRAIssueKey method with branch name if USE_BRANCH_NAME === true', () => {
-        (getInputs as any).mockImplementation(() => ({ ...INPUTS_MOCK, USE_BRANCH_NAME: true }));
-        connector = new GithubConnector();
 
-        expect(connector.getIssueKeysFromTitle()).toEqual(getJIRAIssueKeysReturnValue);
-        expect(getJiraIssueKeys).toHaveBeenCalledWith(BRANCH_NAME);
-      });
-
-      it('calls getJIRAIssueKey method with PR title if  USE_BRANCH_NAME !== true', () => {
-        (getInputs as any).mockImplementation(() => ({ ...INPUTS_MOCK, USE_BRANCH_NAME: false }));
+        (getInputs as any).mockImplementation(() => ({ ...INPUTS_MOCK }));
         connector = new GithubConnector();
 
         expect(connector.getIssueKeysFromTitle()).toEqual(getJIRAIssueKeysReturnValue);

@@ -7,13 +7,11 @@ export const getInputs = (): IActionInputs => {
   const GITHUB_TOKEN: string = core.getInput('github-token', { required: true });
   const BRANCH_IGNORE_PATTERN: string = core.getInput('skip-branches', { required: false }) || '';
 
-  const USE_BRANCH_NAME: boolean = core.getInput('use-branch-name', { required: false }) === 'true';
   const ENCODE_JIRA_TOKEN: boolean = core.getInput('encode-jira-token', { required: false }) === 'true';
 
   return {
     JIRA_TOKEN,
     GITHUB_TOKEN,
-    USE_BRANCH_NAME,
     BRANCH_IGNORE_PATTERN,
     JIRA_BASE_URL: JIRA_BASE_URL.endsWith('/') ? JIRA_BASE_URL.replace(/\/$/, '') : JIRA_BASE_URL,
     ENCODE_JIRA_TOKEN,
