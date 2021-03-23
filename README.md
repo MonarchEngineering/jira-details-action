@@ -5,6 +5,11 @@
 This action is originally forked from https://github.com/cakeinpanic/jira-description-action, but adds some functionality and removes some. It is by no means a judgment on the nice work of [cakeinpanic](https://github.com/cakeinpanic) - just something that better fits our use cases at [ENPICOM](https://www.enpicom.com).
 
 ![illustration](illustration.png)
+
+## Fork changes
+
+This forked version removes `use-branch-name` and will check the PR title first before falling back to the branch name to look for issue tickets.
+
 ## Installation
 
 To make `jira-details-action` a part of your workflow, just add a `jira-details-action.yml` file in your `.github/workflows/` directory in your GitHub repository.
