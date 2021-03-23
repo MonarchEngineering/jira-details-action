@@ -24,7 +24,6 @@ jobs:
           jira-token: ${{ secrets.JIRA_TOKEN }}
           jira-base-url: https://your-domain.atlassian.net
           skip-branches: '^(production-release|master|release\/v\d+)$' # optional
-          use-branch-name: false # optional
           encode-jira-token: false # optional
 ```
 
@@ -38,9 +37,8 @@ When a PR passes the above check, `jira-details-action` will also add details of
 | `github-token`         | Token used to update PR description. `GITHUB_TOKEN` is already available [when you use GitHub actions](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret), so all that is required is to pass it as a param here. | true     | null    |
 | `jira-token`           | Token used to fetch Jira Issue information.  Check [below](#jira-token) for more details on how to generate the token.                                                                                                          | true     | null    |
 | `jira-base-url`        | The subdomain of JIRA cloud that you use to access it. Ex: "https://your-domain.atlassian.net".                                                                                                                                                                                                                    | true     | null    |
-| `skip-branches`        | A regex to ignore running `jira-details-action` on certain branches, like production etc.                                                                                                                                                                                                                                    | false    | ' '     |
-| `use-branch-name`      | Search for issue number in branch name (boolean) title                                                                                                                                                                                                                                  | false    | false     |
-| `encode-jira-token`      | Base64-encode the Jira token (boolean)                                                                                                                                                                                                                                   | false    | false     |
+| `skip-branches`        | A regex to ignore running `jira-details-action` on certain branches, like production etc.                                                                                                                                                                                                                                    | false    | ' '     | | false    | false     |
+| `encode-jira-token`    | Base64-encode the Jira token (boolean)                                                                                                                                                                                                                                   | false    | false     |
 
 Tokens are private, so you should add them as [GitHub secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets).
 
