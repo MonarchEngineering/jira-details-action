@@ -10,6 +10,8 @@ This action is originally forked from https://github.com/cakeinpanic/jira-descri
 
 This forked version removes `use-branch-name` and will check the PR title first before falling back to the branch name to look for issue tickets.
 
+- Fixes a bug where it will trigger a pr update even if the ticket is already in the body
+
 ## Installation
 
 To make `jira-details-action` a part of your workflow, just add a `jira-details-action.yml` file in your `.github/workflows/` directory in your GitHub repository.

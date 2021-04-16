@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import { shouldSkipBranch } from './utils';
+import { getTicketsFromPRDescription, shouldSkipBranch, shouldUpdateBody } from './utils';
 import { getInputs } from './action-inputs';
 import { GithubConnector } from './github-connector';
 import { JiraConnector } from './jira-connector';
@@ -27,6 +27,14 @@ async function run(): Promise<void> {
 
     if (!issueKeys) {
       console.log('Could not find any issue keys');
+      process.exit(0);
+    }
+
+    // Check if the issues are already in the table before we update pr details
+    const stamped = getTicketsFromPRDescription(githubConnector.getGithubData().pullRequest.body);
+
+    if (!shouldUpdateBody(stamped, issueKeys)) {
+      console.log('No new issues to update');
       process.exit(0);
     }
 

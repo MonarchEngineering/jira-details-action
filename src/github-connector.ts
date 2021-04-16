@@ -45,7 +45,7 @@ export class GithubConnector {
     await this.client.pulls.update(prData);
   }
 
-  private getGithubData(): IGithubData {
+  getGithubData(): IGithubData {
     const {
       eventName,
       payload: {

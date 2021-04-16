@@ -1,3 +1,5 @@
+import matchAll from 'match-all';
+
 import {
   BOT_BRANCH_PATTERNS,
   DEFAULT_BRANCH_PATTERNS,
@@ -6,7 +8,10 @@ import {
   JIRA_REGEX_MATCHER,
   WARNING_MESSAGE_ABOUT_HIDDEN_MARKERS,
 } from './constants';
+
 import { JiraDetails } from './types';
+
+const TICKET_TABLE_REGEX = /title="([a-zA-Z0-9-]*)"/gm;
 
 export const getJiraIssueKeys = (input: string, regexp: RegExp = JIRA_REGEX_MATCHER): string[] | null => {
   const matches = input.toUpperCase().match(regexp);
@@ -36,6 +41,28 @@ export const shouldSkipBranch = (branch: string, additionalIgnorePattern?: strin
 
 const escapeRegexp = (str: string): string => {
   return str.replace(/[\\^$.|?*+(<>)[{]/g, '\\$&');
+};
+
+export const getTicketsFromPRDescription = (body: string = ''): string[] | null => {
+  const matches = matchAll(body, TICKET_TABLE_REGEX);
+
+  return matches.toArray();
+};
+
+export const shouldUpdateBody = (bodyIssueMatches: string[], titleIssueKeys: string[]) => {
+  if (bodyIssueMatches.length !== titleIssueKeys.length) {
+    return true;
+  }
+
+  const count = bodyIssueMatches.reduce((count, issue) => {
+    if (titleIssueKeys.includes(issue)) {
+      count += 1;
+    }
+
+    return count;
+  }, 0);
+
+  return count !== titleIssueKeys.length;
 };
 
 export const getPRDescription = (oldBody: string, details: string): string => {
